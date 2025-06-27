@@ -9,8 +9,8 @@ environment rails_env
 
 pidfile "/usr/local/rails_apps/code_review_production/shared/tmp/pids/puma.pid"
 state_path "/usr/local/rails_apps/code_review_production/shared/tmp/pids/puma.state"
-stdout_redirect "/usr/local/rails_apps/code_review_production/shared/log/puma_access.log",
-                "/usr/local/rails_apps/code_review_production/shared/log/puma_error.log", true
+stdout_redirect "/usr/local/rails_apps/code_review_production/shared/log_puma/puma_access.log",
+                "/usr/local/rails_apps/code_review_production/shared/log_puma/puma_error.log", true
 
 threads 1,6
 port 3030
