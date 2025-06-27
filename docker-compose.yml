@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: app_development
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5444:5432"  # 🔁 Host port 5433, container port 5432
+
+
+  redis:
+    image: redis:6
+    restart: always
+    ports:
+      - "6379:6379"  
+
+  web:
+    build: .
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    environment:
+      RAILS_ENV: development
+      DATABASE_URL: postgres://postgres:password@db:5432/app_development
+      CR_REDIS_URL: redis://redis:6379/0
+      GITHUB_WEBHOOK_SECRET: 9d6c54fcaf9e7d2e6aef0d3a71d1bc356037fc2f
+    tty: true
+    stdin_open: true
+
+volumes:
+  pgdata:
